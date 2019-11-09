@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="stylesheet" href="/reset.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1500066_dlil22a4vie.css">
     <title>vuedemo</title>
   </head>
   <body>
@@ -13,5 +15,27 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      /* function refreshRem() {
+        const clientWidth = document.documentElement.clientWidth
+        const rem = clientWidth / 10
+        document.documentElement.style.fontSize = rem + 'px'
+        document.body.style.fontSize = '12px'
+      }
+      
+      let timeoutId
+      window.addEventListener('resize',function () {
+        timeoutId && clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+          refreshRem()
+        }, 1000);
+      })
+
+      window.addEventListener('pageshow',function () {
+        refreshRem()
+      }) */
+      
+      
+    </script>
   </body>
 </html>
