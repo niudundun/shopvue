@@ -2,7 +2,7 @@
   <section class="profile">
     <HeaderGuide title="我的"/>
     <section class="profile-number">
-      <a href="javascript:" class="profile-link">
+      <a href="javascript:" @click="toLogin('/login')" class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-person_round_fill"></i>
         </div>
@@ -98,7 +98,13 @@
 </template>
 
 <script >
-export default {};
+export default {
+  methods:{
+    toLogin(path){
+      this.$router.replace(path)
+    }
+  }
+};
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

@@ -3,6 +3,7 @@ import App from './App.vue'
 import "lib-flexible"
 
 import router from "./router";
+import store from "./store";
 import HeaderGuide from "./components/HeaderGuide/HeaderGuide.vue";
 
 Vue.config.productionTip = false
@@ -17,5 +18,6 @@ new Vue({
   el: '#app',
   components: {App},
   template: '<App/>',
-  router
+  router,
+  store
 })
