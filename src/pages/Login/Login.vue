@@ -82,6 +82,21 @@
       getCaptcha(){
         this.$refs.captcha.src = 'http://localhost:4000/captcha?time=' + Date.now()
       },
+      async sendCode(){
+        let result = await this.$API.getSendCode(this.mobile)
+        if (result.code === 0) {
+          alert('短信发送成功')
+        }else{
+          alert('短信发送失败')
+        }
+
+        this.countDown = 10
+        this.intervalId = setInterval(() => {
+          this.countDown--
+          this.countDown === 0 && clearInterval(this.intervalId)
+        }, 1000);
+      },
+     
       async login(){
         let {isPassWordLogin,mobile,code,username,pwd,captcha} = this
         let names = isPassWordLogin?['username','pwd','captcha']:['mobile','code']
@@ -103,19 +118,12 @@
           }
           if(result.code === 0){
             alert('登录成功')
+            this.$store.dispatch('getUserToken',result.data)
             this.$router.replace('/profile')
           }
         }
         else alert('前端验证失败')
       },
-      sendCode(){
-        console.log(111)
-        this.countDown = 10
-        this.intervalId = setInterval(() => {
-          this.countDown--
-          this.countDown === 0 && clearInterval(this.intervalId)
-        }, 1000);
-      }
     },
     computed:{
       isRightPhone(){

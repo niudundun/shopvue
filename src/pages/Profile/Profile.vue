@@ -2,17 +2,17 @@
   <section class="profile">
     <HeaderGuide title="我的"/>
     <section class="profile-number">
-      <a href="javascript:" @click="toLogin('/login')" class="profile-link">
+      <a href="javascript:" @click="!!!token && toLogin('/login')" class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-person_round_fill"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top">登录/注册</p>
+          <p class="user-info-top" v-if="user.name">{{user.name?user.name:'登录/注册'}}</p>
           <p>
             <span class="user-icon">
               <i class="iconfont icon-shouji icon-mobile"></i>
             </span>
-            <span class="icon-mobile-number">暂无绑定手机号</span>
+            <span class="icon-mobile-number" v-if="user.phone">{{user.phone?user.phone:'暂无绑定手机号'}}</span>
           </p>
         </div>
         <span class="arrow">
@@ -98,11 +98,18 @@
 </template>
 
 <script >
+import { mapState } from "vuex";
 export default {
   methods:{
     toLogin(path){
       this.$router.replace(path)
     }
+  },
+  computed:{
+    ...mapState({
+      user:state => state.user,
+      token:state => state.token
+    })
   }
 };
 </script>

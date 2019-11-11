@@ -32,3 +32,10 @@ export const loginWithSms = (phone,code) => ajax({
     code
   }
 })
+
+export const getSendCode = (phone) => ajax({
+  url:'/sendcode',
+  params:{
+    phone
+  }
+})

@@ -1,5 +1,5 @@
 import { getAddress, getCategorys,getShops } from "../api";
-import { SAVE_ADDRESS,SAVE_CATEGORYS,SAVE_SHOPS } from "./mutation-types";
+import { SAVE_ADDRESS,SAVE_CATEGORYS,SAVE_SHOPS,SAVE_USER,SAVE_TOKEN } from "./mutation-types";
 
 export default{
   async getAddressAction({commit,state}){
@@ -20,5 +20,11 @@ export default{
     if(result.code === 0 ){
       commit(SAVE_SHOPS,{shops:result.data})
     }
+  },
+  getUserToken({commit},user){
+    commit(SAVE_TOKEN,{token:user.token})
+    delete user.token
+    // console.log(user)
+    commit(SAVE_USER,{user:user})
   }
 }
