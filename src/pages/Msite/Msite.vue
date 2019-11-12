@@ -41,9 +41,7 @@ import _ from "lodash";
 export default {
   components:{ShopList},
   async mounted(){
-  //  let result = await getAddress(40.10038,116.36867)
    this.$store.dispatch('getAddressAction')
-  //  console.log(this.$store.state.address)
    this.$store.dispatch('getCategorysAction',()=>{
     this.$nextTick(()=>{
       new Swiper('.swiper-container',{
