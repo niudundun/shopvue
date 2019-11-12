@@ -4,13 +4,21 @@ export const getAddress = (latitude,longitude) => ajax({
   url:`/position/${latitude},${longitude}`
 })
 
-export const getCategorys = () => ajax('/index_category')
+export const getCategorys = () => ajax({
+  url:'/index_category',
+  headers:{
+    needToken:true
+  }
+})
 
 export const getShops = (latitude,longitude) => ajax({
   url:'/shops',
   paramas:{
     latitude,
     longitude
+  },
+  headers:{
+    needToken:true
   }
 })
 
@@ -37,5 +45,12 @@ export const getSendCode = (phone) => ajax({
   url:'/sendcode',
   params:{
     phone
+  }
+})
+
+export const autoLogin = () => ajax({
+  url:'/auto_login',
+  headers:{
+    needToken:true
   }
 })

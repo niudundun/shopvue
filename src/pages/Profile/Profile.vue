@@ -2,21 +2,21 @@
   <section class="profile">
     <HeaderGuide title="我的"/>
     <section class="profile-number">
-      <a href="javascript:" @click="!!!token && toLogin('/login')" class="profile-link">
+      <a href="javascript:" @click="toLogin('/login')" class="profile-link">
         <div class="profile_image">
-          <i class="iconfont icon-person_round_fill"></i>
+          <i class="iconfont icon-xiugaitouxiang"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top" v-if="user.name">{{user.name?user.name:'登录/注册'}}</p>
+          <p class="user-info-top" v-if="!user.phone">{{user.name?user.name:'登录/注册'}}</p>
           <p>
             <span class="user-icon">
-              <i class="iconfont icon-shouji icon-mobile"></i>
+              <i class="iconfont icon-shouji icon-shouji"></i>
             </span>
-            <span class="icon-mobile-number" v-if="user.phone">{{user.phone?user.phone:'暂无绑定手机号'}}</span>
+            <span class="icon-mobile-number" v-if="!user.name">{{user.phone?user.phone:'暂无绑定手机号'}}</span>
           </p>
         </div>
         <span class="arrow">
-          <i class="iconfont icon-jiantou1"></i>
+          <i class="iconfont icon-dibudaohanglan-"></i>
         </span>
       </a>
     </section>
@@ -46,12 +46,12 @@
       <!-- 我的订单 -->
       <a href="javascript:" class="my_order">
         <span>
-          <i class="iconfont icon-order-s"></i>
+          <i class="iconfont icon-dingdan2"></i>
         </span>
         <div class="my_order_div">
           <span>我的订单</span>
           <span class="my_order_icon">
-            <i class="iconfont icon-jiantou1"></i>
+            <i class="iconfont icon-dibudaohanglan-"></i>
           </span>
         </div>
       </a>
@@ -63,19 +63,19 @@
         <div class="my_order_div">
           <span>积分商城</span>
           <span class="my_order_icon">
-            <i class="iconfont icon-jiantou1"></i>
+            <i class="iconfont icon-dibudaohanglan-"></i>
           </span>
         </div>
       </a>
       <!-- 硅谷外卖会员卡 -->
       <a href="javascript:" class="my_order">
         <span>
-          <i class="iconfont icon-vip"></i>
+          <i class="iconfont icon-xinbaniconshangchuan-"></i>
         </span>
         <div class="my_order_div">
           <span>硅谷外卖会员卡</span>
           <span class="my_order_icon">
-            <i class="iconfont icon-jiantou1"></i>
+            <i class="iconfont icon-dibudaohanglan-"></i>
           </span>
         </div>
       </a>
@@ -89,20 +89,38 @@
         <div class="my_order_div">
           <span>服务中心</span>
           <span class="my_order_icon">
-            <i class="iconfont icon-jiantou1"></i>
+            <i class="iconfont icon-dibudaohanglan-"></i>
           </span>
         </div>
       </a>
+    </section>
+    <section class="profile_my_order border-1px">
+      <mt-button @click="logout" style="width: 100%" type="danger">退出登录</mt-button>
     </section>
   </section>
 </template>
 
 <script >
+import { LOGOUT } from "../../store/mutation-types";
+import { MessageBox } from "mint-ui";
 import { mapState } from "vuex";
 export default {
   methods:{
     toLogin(path){
-      this.$router.replace(path)
+      if(!this.user._id){
+        this.$router.replace(path)
+      }
+    },
+    logout(){
+      MessageBox.confirm('确定退出登录吗？')
+      .then(
+        resolve => {
+          this.$store.commit(LOGOUT)
+          this.$router.replace('/login')
+        },
+        // reject => console.log('取消退出')
+      )
+      
     }
   },
   computed:{
@@ -110,210 +128,206 @@ export default {
       user:state => state.user,
       token:state => state.token
     })
+  },
+  mounted(){
+    this.$store.dispatch('autoLoginAction')
   }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
 @import '../../common/stylus/mixins.styl';
+.profile   // 我的
+  width  100% 
 
-.profile { // 我的
-  width: 100%;
+  .profile-number  
+    margin-top  45.5px 
 
-  .profile-number {
-    margin-top: 45.5px;
+    .profile-link  
+      clearFix() 
+      position  relative 
+      display  block 
+      background  #02a774 
+      padding  20px 10px 
 
-    .profile-link {
-      clearFix();
-      position: relative;
-      display: block;
-      background: #02a774;
-      padding: 20px 10px;
+      .profile_image  
+        float  left 
+        width  60px 
+        height  60px 
+        border-radius  50% 
+        overflow  hidden 
+        vertical-align  top 
+        background  #f2f2f2 
 
-      .profile_image {
-        float: left;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        overflow: hidden;
-        vertical-align: top;
-        background: #f2f2f2;
+        .icon-xiugaitouxiang  
+          background  #e4e4e4 
+          font-size  62px 
+         
+       
 
-        .icon-person_round_fill {
-          background: #e4e4e4;
-          font-size: 62px;
-        }
-      }
+      .user-info  
+        float  left 
+        margin-top  8px 
+        margin-left  15px 
 
-      .user-info {
-        float: left;
-        margin-top: 8px;
-        margin-left: 15px;
+        p  
+          font-weight  700 
+          font-size  18px 
+          color  #fff 
 
-        p {
-          font-weight: 700;
-          font-size: 18px;
-          color: #fff;
+          &.user-info-top  
+            padding-bottom  8px 
+           
 
-          &.user-info-top {
-            padding-bottom: 8px;
-          }
+          .user-icon  
+            display  inline-block 
+            width  20px 
+            height  20px 
 
-          .user-icon {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
+            .icon-shouji  
+              font-size  16px 
+              vertical-align  middle 
+             
+           
 
-            .icon-mobile {
-              font-size: 16px;
-              vertical-align: middle;
-            }
-          }
+          .icon-mobile-number  
+            font-size  14px 
+            color  #fff 
+           
+         
+       
 
-          .icon-mobile-number {
-            font-size: 14px;
-            color: #fff;
-          }
-        }
-      }
+      .arrow  
+        width  12px 
+        height  12px 
+        position  absolute 
+        right  15px 
+        top  40% 
 
-      .arrow {
-        width: 12px;
-        height: 12px;
-        position: absolute;
-        right: 15px;
-        top: 40%;
+        .icon-dibudaohanglan-  
+          color  #fff 
+          font-size  5px 
+         
+       
+     
+   
 
-        .icon-jiantou1 {
-          color: #fff;
-          font-size: 5px;
-        }
-      }
-    }
-  }
+  .profile_info_data  
+    bottom-border-1px(#e4e4e4) 
+    width  100% 
+    background  #fff 
+    overflow  hidden 
 
-  .profile_info_data {
-    bottom-border-1px(#e4e4e4);
-    width: 100%;
-    background: #fff;
-    overflow: hidden;
+    .info_data_list  
+      clearFix() 
 
-    .info_data_list {
-      clearFix();
+      .info_data_link  
+        float  left 
+        width  33% 
+        text-align  center 
+        border-right  1px solid #f1f1f1 
 
-      .info_data_link {
-        float: left;
-        width: 33%;
-        text-align: center;
-        border-right: 1px solid #f1f1f1;
+        .info_data_top  
+          display  block 
+          width  100% 
+          font-size  14px 
+          color  #333 
+          padding  15px 5px 10px 
 
-        .info_data_top {
-          display: block;
-          width: 100%;
-          font-size: 14px;
-          color: #333;
-          padding: 15px 5px 10px;
+          span  
+            display  inline-block 
+            font-size  30px 
+            color  #f90 
+            font-weight  700 
+            line-height  30px 
+           
+         
 
-          span {
-            display: inline-block;
-            font-size: 30px;
-            color: #f90;
-            font-weight: 700;
-            line-height: 30px;
-          }
-        }
+        .info_data_bottom  
+          display  inline-block 
+          font-size  14px 
+          color  #666 
+          font-weight  400 
+          padding-bottom  10px 
+         
+       
 
-        .info_data_bottom {
-          display: inline-block;
-          font-size: 14px;
-          color: #666;
-          font-weight: 400;
-          padding-bottom: 10px;
-        }
-      }
+      .info_data_link nth-of-type(2)  
+        .info_data_top  
+          span  
+            color  #ff5f3e 
+           
+         
+       
 
-      .info_data_link:nth-of-type(2) {
-        .info_data_top {
-          span {
-            color: #ff5f3e;
-          }
-        }
-      }
+      .info_data_link nth-of-type(3)  
+        border  0 
 
-      .info_data_link:nth-of-type(3) {
-        border: 0;
+        .info_data_top  
+          span  
+            color  #6ac20b 
+           
+         
+       
+     
+   
 
-        .info_data_top {
-          span {
-            color: #6ac20b;
-          }
-        }
-      }
-    }
-  }
+  .profile_my_order  
+    top-border-1px(#e4e4e4) 
+    margin-top  10px 
+    background  #fff 
 
-  .profile_my_order {
-    top-border-1px(#e4e4e4);
-    margin-top: 10px;
-    background: #fff;
+    .my_order  
+      display  flex 
+      align-items  center 
+      padding-left  15px 
 
-    .my_order {
-      display: flex;
-      align-items: center;
-      padding-left: 15px;
+      >span  
+        display  flex 
+        align-items  center 
+        width  20px 
+        height  20px 
 
-      >span {
-        display: flex;
-        align-items: center;
-        width: 20px;
-        height: 20px;
+        >.iconfont  
+          margin-left  -10px 
+          font-size  30px 
+         
 
-        >.iconfont {
-          margin-left: -10px;
-          font-size: 30px;
-        }
+        .icon-dingdan2  
+          color  #02a774 
+         
 
-        .icon-order-s {
-          color: #02a774;
-        }
+        .icon-jifen  
+          color  #ff5f3e 
+         
 
-        .icon-jifen {
-          color: #ff5f3e;
-        }
+        .icon-xinbaniconshangchuan-  
+          color  #f90 
+         
 
-        .icon-vip {
-          color: #f90;
-        }
+        .icon-fuwu  
+          color  #02a774 
+         
+       
 
-        .icon-fuwu {
-          color: #02a774;
-        }
-      }
+      .my_order_div  
+        width  100% 
+        border-bottom  1px solid #f1f1f1 
+        padding  18px 10px 18px 0 
+        font-size  16px 
+        color  #333 
+        display  flex 
+        justify-content  space-between 
 
-      .my_order_div {
-        width: 100%;
-        border-bottom: 1px solid #f1f1f1;
-        padding: 18px 10px 18px 0;
-        font-size: 16px;
-        color: #333;
-        display: flex;
-        justify-content: space-between;
+        span  
+          display  block 
+         
 
-        span {
-          display: block;
-        }
+        .my_order_icon  
+          width  10px 
+          height  10px 
 
-        .my_order_icon {
-          width: 10px;
-          height: 10px;
-
-          .icon-jiantou1 {
-            color: #bbb;
-            font-size: 10px;
-          }
-        }
-      }
-    }
-  }
-}
+          .icon-dibudaohanglan-  
+            color  #bbb 
+            font-size  10px 
 </style>

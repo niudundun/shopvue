@@ -1,4 +1,4 @@
-import { getAddress, getCategorys,getShops } from "../api";
+import { getAddress, getCategorys,getShops, autoLogin } from "../api";
 import { SAVE_ADDRESS,SAVE_CATEGORYS,SAVE_SHOPS,SAVE_USER,SAVE_TOKEN } from "./mutation-types";
 
 export default{
@@ -26,5 +26,11 @@ export default{
     delete user.token
     // console.log(user)
     commit(SAVE_USER,{user:user})
+  },
+  async autoLoginAction({commit}){
+    let result = await autoLogin()
+    if(result.code ===0 ){
+      commit(SAVE_USER,{user:result.data})
+    }
   }
 }

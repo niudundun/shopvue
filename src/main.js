@@ -3,6 +3,7 @@ import App from './App.vue'
 import "lib-flexible"
 import "./VeeValidate"
 import * as API from './api'
+import { Button } from "mint-ui";
 
 import router from "./router";
 import store from "./store";
@@ -15,6 +16,7 @@ Vue.config.productionTip = false
 // }).$mount('#app')
 
 Vue.component('HeaderGuide',HeaderGuide)
+Vue.component(Button.name,Button)
 Vue.prototype.$API = API
 
 new Vue({

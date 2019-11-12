@@ -65,6 +65,7 @@
 </template>
 
 <script >
+import { Toast } from "mint-ui";
   export default {
     data(){
       return{
@@ -85,9 +86,9 @@
       async sendCode(){
         let result = await this.$API.getSendCode(this.mobile)
         if (result.code === 0) {
-          alert('短信发送成功')
+          Toast('短信发送成功')
         }else{
-          alert('短信发送失败')
+          Toast('短信发送失败')
         }
 
         this.countDown = 10
@@ -102,7 +103,7 @@
         let names = isPassWordLogin?['username','pwd','captcha']:['mobile','code']
         const success = await this.$validator.validateAll(names)
         if(success) {
-          alert('前端验证成功')
+          Toast('前端验证成功')
           let result
           if(isPassWordLogin){
             result = await this.$API.loginWithPwd(username,pwd,captcha)
@@ -117,12 +118,12 @@
             }
           }
           if(result.code === 0){
-            alert('登录成功')
+            Toast('登录成功')
             this.$store.dispatch('getUserToken',result.data)
             this.$router.replace('/profile')
           }
         }
-        else alert('前端验证失败')
+        else Toast('前端验证失败')
       },
     },
     computed:{
