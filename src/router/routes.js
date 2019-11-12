@@ -66,7 +66,7 @@ export default [
       },
       {
         path: '/shop',
-        Redirect: '/shop/goods'
+        redirect: '/shop/goods'
       }
     ]
   },
