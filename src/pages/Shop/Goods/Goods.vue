@@ -38,13 +38,16 @@
         </li>
       </ul>
     </div>
+    <ShopCar/>
   </div>
 </template>
 
 <script >
 import Bscroll from "better-scroll";
 import { mapState } from "vuex";
+import ShopCar from "../../../components/ShopCar/ShopCar";
   export default {
+    components:{ShopCar},
     data(){
       return {
         scrollY:0,
@@ -80,7 +83,7 @@ import { mapState } from "vuex";
         this.rightScroll = new Bscroll('.goodsRight',{
           scrollY:true,
           probeType:2,
-          click:true
+          // click:true
         }),
         this.rightScroll.on('scroll',({x,y}) => {
           this.scrollY = Math.abs(y)
@@ -120,7 +123,7 @@ import { mapState } from "vuex";
   @import "../../../common/stylus/mixins.styl"
   #goodsContainer
     display flex
-    height calc(100vh - 224px)
+    height calc(100vh - 272px)
     overflow hidden
     .goodsLeft
       width 80px
@@ -148,6 +151,7 @@ import { mapState } from "vuex";
             display inline-block
     .goodsRight
       width 295px
+      // flex 1
       .title
         padding-left: 14px
         height: 26px
@@ -200,4 +204,5 @@ import { mapState } from "vuex";
             position: absolute
             right: 0
             bottom: 12px
+            // z-index 99
 </style>

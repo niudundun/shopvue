@@ -18,10 +18,33 @@
 
 <script >
 import ShopHeader from "../../components/ShopHeader/ShopHeader";
+import { mapState } from "vuex";
+import { SAVE_SHOPDATAS,SAVE_SHOPCAR } from "../../store/mutation-types";
   export default {
     components:{ShopHeader},
+    computed:{
+      ...mapState({
+        shopDatas : state => state.shop.shopDatas
+      })
+    },
     mounted(){
-      this.$store.dispatch('getShopDatas')
+      if(sessionStorage.getItem('shopDatas')){
+        let shopDatas = JSON.parse(sessionStorage.getItem('shopDatas'))
+        let shopCar = shopDatas.goods.reduce((pre,good)=>{
+          pre.push(...good.foods.filter(food => food.count))
+          return pre
+        },[])
+        this.$store.commit(SAVE_SHOPDATAS,{shopDatas})
+        this.$store.commit(SAVE_SHOPCAR,{shopCar})
+      }else{
+        this.$store.dispatch('getShopDatas')
+      }
+      window.addEventListener('beforeunload',()=>{
+        sessionStorage.setItem('shopDatas',JSON.stringify(this.shopDatas))
+      })
+    },
+    beforeDestroy(){
+      sessionStorage.setItem('shopDatas',JSON.stringify(this.shopDatas))
     }
   }
 </script>

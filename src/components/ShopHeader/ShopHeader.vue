@@ -2,7 +2,7 @@
   <div class="shop-header">
     <nav class="shop-nav"
          style="background-image: url('https://fuss10.elemecdn.com/f/5c/ead54394c3de198d3e6d3e9111bbfpng.png');">
-      <a @click="$router.push('/msite')" class="back">
+      <a @click="$router.replace('/msite')" class="back">
         <i class="iconfont icon-jiantouarrowhead7"/>
       </a>
     </nav>
